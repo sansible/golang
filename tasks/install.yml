@@ -1,0 +1,44 @@
+---
+
+- name: Download the Golang tarball
+  become: yes
+  get_url:
+    url: "http://golang.org/dl/{{ golang.tarball }}"
+    dest: "/usr/local/src/{{ golang.tarball }}"
+    sha256sum: "{{ golang.tarball_checksum }}"
+    force: no
+    validate_certs: no
+
+- name: Extract the Golang tarball
+  become: yes
+  unarchive:
+    copy: no
+    dest: /usr/local
+    src: "/usr/local/src/{{ golang.tarball }}"
+
+- name: Create Golang code folders for workspace user
+  become : yes
+  become_user: "{{ golang.workspace_user }}"
+  file:
+    dest: "{{ item }}"
+    recurse: yes
+    state: directory
+  with_items:
+    - "/home/{{ golang.workspace_user }}/go/src/github.com"
+    - "/home/{{ golang.workspace_user }}/go/pkg"
+    - "/home/{{ golang.workspace_user }}/go/bin"
+  when: golang.workspace_user
+
+- name: Add Golang environment variables to .bashrc for workspace user
+  become : yes
+  become_user: "{{ golang.workspace_user }}"
+  lineinfile:
+    create: yes
+    dest: "/home/{{ golang.workspace_user }}/.bashrc"
+    insertafter: EOF
+    line: "{{ item }}"
+  with_items:
+    - "export GOPATH=/home/{{ golang.workspace_user }}/go"
+    - "export PATH=$GOPATH/bin:$PATH"
+    - "export PATH=$PATH:/usr/local/go/bin"
+  when: golang.workspace_user

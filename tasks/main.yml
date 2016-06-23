@@ -1,0 +1,6 @@
+---
+
+- name: Install Golang
+  include: install.yml
+  tags:
+    - build

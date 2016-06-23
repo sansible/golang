@@ -1,0 +1,25 @@
+---
+
+- name: Test Golang role
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        update_cache: yes
+      tags:
+        - build
+
+  roles:
+    - role: sansible.users_and_groups
+      users_and_groups:
+        groups:
+          - name: golang_test
+        users:
+          - name: golang_test
+            group: golang_test
+
+    - role: sansible.golang
+      golang:
+        workspace_user: golang_test

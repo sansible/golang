@@ -1,0 +1,10 @@
+---
+
+golang:
+  tarball: go1.6.linux-amd64.tar.gz
+  tarball_checksum: 5470eac05d273c74ff8bac7bef5bad0b5abbd1c4052efbdbc8db45332e836b0b
+  # Ansible 2 seems to have an issue with the Golang cert, set this to no on Ansible 2.*
+  validate_certs: yes
+  # If specified GO path and directories will be setup for this user and group
+  workspace_user: ~
+  
