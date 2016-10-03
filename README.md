@@ -8,7 +8,7 @@ Develop: [![Build Status](https://travis-ci.org/sansible/golang.svg?branch=devel
 * [Tags](#tags)
 * [Examples](#examples)
 
-This roles installs Openvpn.
+This roles installs Golang.
 
 
 
