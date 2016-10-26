@@ -3,7 +3,7 @@
 - name: Download the Golang tarball
   become: yes
   get_url:
-    url: "http://golang.org/dl/{{ golang.tarball }}"
+    url: "{{ golang.base_url }}{{ golang.tarball }}"
     dest: "/usr/local/src/{{ golang.tarball }}"
     sha256sum: "{{ golang.tarball_checksum }}"
     force: no
