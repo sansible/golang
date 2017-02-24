@@ -17,16 +17,18 @@
     src: "/usr/local/src/{{ golang.tarball }}"
 
 - name: Create Golang code folders for workspace user
-  become : yes
-  become_user: "{{ golang.workspace_user }}"
+  become: yes
   file:
-    dest: "{{ item }}"
-    recurse: yes
+    group: "{{ golang.workspace_user }}"
+    name: "{{ item }}"
+    owner: "{{ golang.workspace_user }}"
     state: directory
   with_items:
-    - "/home/{{ golang.workspace_user }}/go/src/github.com"
-    - "/home/{{ golang.workspace_user }}/go/pkg"
+    - "/home/{{ golang.workspace_user }}/go"
     - "/home/{{ golang.workspace_user }}/go/bin"
+    - "/home/{{ golang.workspace_user }}/go/pkg"
+    - "/home/{{ golang.workspace_user }}/go/src/"
+    - "/home/{{ golang.workspace_user }}/go/src/github.com"
   when: golang.workspace_user
 
 - name: Add Golang environment variables to .bashrc for workspace user
