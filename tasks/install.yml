@@ -3,44 +3,44 @@
 - name: Download the Golang tarball
   become: yes
   get_url:
-    url: "{{ golang.base_url }}{{ golang.tarball }}"
-    dest: "/usr/local/src/{{ golang.tarball }}"
-    sha256sum: "{{ golang.tarball_checksum }}"
+    url: "{{ sansible_golang_base_url }}{{ sansible_golang_tarball }}"
+    dest: "/usr/local/src/{{ sansible_golang_tarball }}"
+    sha256sum: "{{ sansible_golang_tarball_checksum }}"
     force: no
-    validate_certs: no
+    validate_certs: "{{ sansible_golang_validate_certs }}"
 
 - name: Extract the Golang tarball
   become: yes
   unarchive:
     copy: no
     dest: /usr/local
-    src: "/usr/local/src/{{ golang.tarball }}"
+    src: "/usr/local/src/{{ sansible_golang_tarball }}"
 
 - name: Create Golang code folders for workspace user
   become: yes
   file:
-    group: "{{ golang.workspace_user }}"
+    group: "{{ sansible_golang_workspace_user }}"
     name: "{{ item }}"
-    owner: "{{ golang.workspace_user }}"
+    owner: "{{ sansible_golang_workspace_user }}"
     state: directory
   with_items:
-    - "/home/{{ golang.workspace_user }}/go"
-    - "/home/{{ golang.workspace_user }}/go/bin"
-    - "/home/{{ golang.workspace_user }}/go/pkg"
-    - "/home/{{ golang.workspace_user }}/go/src/"
-    - "/home/{{ golang.workspace_user }}/go/src/github.com"
-  when: golang.workspace_user
+    - "/home/{{ sansible_golang_workspace_user }}/go/"
+    - "/home/{{ sansible_golang_workspace_user }}/go/bin/"
+    - "/home/{{ sansible_golang_workspace_user }}/go/pkg/"
+    - "/home/{{ sansible_golang_workspace_user }}/go/src/"
+    - "/home/{{ sansible_golang_workspace_user }}/go/src/github.com/"
+  when: "'{{ sansible_golang_workspace_user }}' != ''"
 
 - name: Add Golang environment variables to .bashrc for workspace user
-  become : yes
-  become_user: "{{ golang.workspace_user }}"
+  become: yes
+  become_user: "{{ sansible_golang_workspace_user }}"
   lineinfile:
     create: yes
-    dest: "/home/{{ golang.workspace_user }}/.bashrc"
+    dest: "/home/{{ sansible_golang_workspace_user }}/.bashrc"
     insertafter: EOF
     line: "{{ item }}"
   with_items:
-    - "export GOPATH=/home/{{ golang.workspace_user }}/go"
+    - "export GOPATH=/home/{{ sansible_golang_workspace_user }}/go"
     - "export PATH=$GOPATH/bin:$PATH"
     - "export PATH=$PATH:/usr/local/go/bin"
-  when: golang.workspace_user
+  when: "'{{ sansible_golang_workspace_user }}' != ''"

@@ -3,27 +3,11 @@
 Master: [![Build Status](https://travis-ci.org/sansible/golang.svg?branch=master)](https://travis-ci.org/sansible/golang)  
 Develop: [![Build Status](https://travis-ci.org/sansible/golang.svg?branch=develop)](https://travis-ci.org/sansible/golang)
 
-* [ansible.cfg](#ansible-cfg)
 * [Installation and Dependencies](#installation-and-dependencies)
 * [Tags](#tags)
 * [Examples](#examples)
 
 This roles installs Golang.
-
-
-
-
-## ansible.cfg
-
-This role is designed to work with merge "hash_behaviour". Make sure your
-ansible.cfg contains these settings
-
-```INI
-[defaults]
-hash_behaviour = merge
-```
-
-
 
 
 ## Installation and Dependencies
@@ -33,21 +17,17 @@ To install run `ansible-galaxy install sansible.golang` or add this to your
 
 ```YAML
 - name: sansible.golang
-  version: v1.0
+  version: v2.0
 ```
 
 and run `ansible-galaxy install -p ./roles -r roles.yml`
-
-
 
 
 ## Tags
 
 This role uses one tag: **build** 
 
-* `build` - Installs Golang and all it's dependencies.
-
-
+* `build` - Installs Golang and all its dependencies.
 
 
 ## Examples
@@ -70,6 +50,5 @@ Setup Golang workspace for a user:
 
   roles:
     - role: sansible.golang
-      golang:
-        workspace_user: api_user
+      sansible_golang_workspace_user: api_user
 ```

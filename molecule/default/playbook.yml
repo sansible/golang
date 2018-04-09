@@ -1,0 +1,18 @@
+---
+
+- name: Converge
+  hosts: all
+
+  roles:
+    - role: sansible.users_and_groups
+      sansible_users_and_groups_users:
+        - name: go
+
+    - role: golang
+      sansible_golang_workspace_user: go
+      sansible_golang_validate_certs: no
+      when: ansible_distribution_release == 'trusty'
+
+    - role: golang
+      sansible_golang_workspace_user: go
+      when: ansible_distribution_release != 'trusty'

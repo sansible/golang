@@ -1,16 +1,19 @@
-# IDEs
-*.swp
-*.sublime*
-.idea
+## IDEs, editors, ...
+.\#*
 .DS_Store
+.idea
 .project
+*.bak
+*.iml
+*.sublime*
+*.swp
 /.settings
+\#*\#
 
 # Build and Tests Artefacts
-/.make
-/tests/.vagrant
-/tests/sansible.*
-/tests/*.log
-/meta/.galaxy_install_info
-*.bak
+*.pyc
 *.retry
+.cache/
+.molecule/
+.venv_*
+/meta/.galaxy_install_info
