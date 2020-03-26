@@ -29,7 +29,7 @@
     - "/home/{{ sansible_golang_workspace_user }}/go/pkg/"
     - "/home/{{ sansible_golang_workspace_user }}/go/src/"
     - "/home/{{ sansible_golang_workspace_user }}/go/src/github.com/"
-  when: "'{{ sansible_golang_workspace_user }}' != ''"
+  when: sansible_golang_workspace_user is not none
 
 - name: Add Golang environment variables to .bashrc for workspace user
   become: yes
@@ -43,4 +43,4 @@
     - "export GOPATH=/home/{{ sansible_golang_workspace_user }}/go"
     - "export PATH=$GOPATH/bin:$PATH"
     - "export PATH=$PATH:/usr/local/go/bin"
-  when: "'{{ sansible_golang_workspace_user }}' != ''"
+  when: sansible_golang_workspace_user is not none
